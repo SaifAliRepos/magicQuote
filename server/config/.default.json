@@ -1,0 +1,5 @@
+{
+  "jsonSecret": "xxx",
+  "ETHEREAL_USER": "abcd",
+  "mongoURL": "mongodb://localhost:27017/quoter"
+}
