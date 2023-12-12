@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
 
-const generateJwtToken = (email, callback, expiresIn = '1h') => {
+const generateJwtToken = (email, callback, expiresIn = '9h') => {
   const payload = {
     user: {
       email: email
