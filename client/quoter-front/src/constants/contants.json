@@ -1,0 +1,8 @@
+{
+  "POST_UPDATED": "Quote updated successfully!",
+  "POST_DELETED": "Quote removed successfully!",
+  "POST_CREATED": "Quote created successfully!",
+  "POST_NOT_LOADED": "Unable to load quotes..",
+  "USER_CREATED": "User registered successfully!",
+  "SIGNIN": "Signed in succesfully!"
+}
