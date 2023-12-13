@@ -14,7 +14,7 @@ import { useMediaQuery } from 'react-responsive'
 const NavScrollExample = () => {
   const isMediumScreen = useMediaQuery({ maxWidth: 1000 })
 
-  const activeUser = useSelector(state => state.auth.user[0])
+  const activeUser = useSelector(state => state.auth?.user?.[0])
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
