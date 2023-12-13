@@ -25,7 +25,7 @@ export const authSlice = createSlice({
       return {
         ...state,
         token: localStorage.getItem('token'),
-        isAuthenticated: false,
+        isAuthenticated: true,
         loading: false,
         user: action.payload.user //changed it to [0]
       }

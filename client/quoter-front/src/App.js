@@ -1,25 +1,23 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Home from './components/Home'
+import Home from './components/Users/Home'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import setAuthToken from './utils/setAuthToken'
 import { LOGOUT } from './reducers/authSlice'
 import { useAuth } from './hooks/useAuth'
-import Register from './components/Forms/Register'
-import RegisterForm from './components/Forms/Register'
+import RegisterForm from './components/Users/Forms/Register'
 import AutohideToast from './utils/Toast'
 import NavScrollExample from './components/Header/Navbar'
-import Login from './components/Login'
+import BasicLoginForm from './components/Users/Forms/Login'
+import { PrivateRoutes } from './routes/PrivateRoutes'
 
 function App() {
   const { auth } = useAuth()
   const dispatch = useDispatch()
 
-  const authenticated = useSelector(state => state.auth.user?.isAuthenticated)
-
   useEffect(() => {
-    if (localStorage.token && authenticated) {
+    if (localStorage.token) {
       setAuthToken(localStorage.token)
       auth()
     }
@@ -34,10 +32,10 @@ function App() {
       <NavScrollExample />
       <AutohideToast />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<PrivateRoutes Component={Home} />} />
+        <Route path='/my-profile' element={<PrivateRoutes Component={RegisterForm} />} />
+        <Route path='/login' element={<BasicLoginForm />} />
         <Route path='/register' element={<RegisterForm />} />
-        <Route path='my-dashboard/' element={<Register />} />
       </Routes>
     </Router>
   )

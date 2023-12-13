@@ -10,7 +10,7 @@ const postUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { first_name, last_name, user_name, gender, email, password } =
+  const { first_name, last_name, user_name, gender, profile, email, password } =
     req.body;
 
   try {
@@ -26,6 +26,7 @@ const postUser = async (req, res) => {
       last_name,
       user_name,
       gender,
+      profile,
       email,
       password,
     });
@@ -53,7 +54,8 @@ const updateUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { first_name, last_name, user_name, gender, verified } = req.body;
+  const { first_name, last_name, user_name, profile, gender, verified } =
+    req.body;
 
   try {
     let user = await User.findOne({ email: req.user.email });
@@ -68,12 +70,28 @@ const updateUser = async (req, res) => {
           first_name,
           last_name,
           user_name,
+          profile,
           gender,
-          verified,
         },
       },
       { new: true },
     );
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+const verifyUser = async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.user.email });
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "User doesn't exist" }] });
+    }
+
+    user.verified = true;
+    await user.save();
+
     return res.status(200).json({ user });
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -98,24 +116,10 @@ const loginUser = async (req, res) => {
     generateJwtToken(user.email, (err, token) => {
       return res
         .status(err ? 500 : 200)
-        .json({ error: err ? 'Something went wrong' : null, token });
+        .json({ error: err ? 'Something went wrong' : null, token, user });
     });
   } catch (error) {
     return res.status(400).json({ error: error.message });
-  }
-};
-
-const getAllUsers = async (req, res) => {
-  try {
-    console.log('Helloooooo');
-    let users = await User.find({});
-    if (!users) {
-      res.json({ Message: 'No user found!' });
-    }
-
-    res.json({ users });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
   }
 };
 
@@ -128,10 +132,24 @@ const loadUser = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    let users = await User.find({});
+    if (!users) {
+      res.json({ Message: 'No user found!' });
+    }
+
+    res.json({ users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   postUser,
   updateUser,
   loginUser,
   loadUser,
   getAllUsers,
+  verifyUser,
 };

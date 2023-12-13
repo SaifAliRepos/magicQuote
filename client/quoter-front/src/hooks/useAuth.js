@@ -24,11 +24,35 @@ export const useAuth = () => {
     }
   }
 
+  const update = async formData => {
+    try {
+      await api.post('/users/update', formData)
+      return true
+    } catch (err) {
+      const errors = err.response.data.errors
+      if (errors) {
+        errors.forEach(error => dispatch(SET_AlERT({ msg: error.msg })))
+      }
+      return false
+    }
+  }
+
+  const verifyUser = async () => {
+    try {
+      const res = await api.put('/users/verify')
+      dispatch(SET_AlERT({ msg: 'User Verified' }))
+      return res.data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const login = async (email, password) => {
     try {
       const body = { email, password }
-      await api.post('/users/login', body)
-      dispatch(USER_LOADED({ isAuthenticated: true }))
+      const res = await api.post('/users/login', body)
+      dispatch(REGISTER_USER({ token: res.data.token }))
+      console.log(res.data)
       dispatch(SET_AlERT({ msg: itn.SIGNIN }))
       return true
     } catch (err) {
@@ -38,6 +62,7 @@ export const useAuth = () => {
         errors.forEach(error => dispatch(SET_AlERT({ msg: error.msg })))
       }
 
+      console.log('From login')
       dispatch(LOGOUT())
       return false
     }
@@ -50,6 +75,7 @@ export const useAuth = () => {
       dispatch(USER_LOADED(res.data))
       return true
     } catch (err) {
+      console.log('from auth')
       dispatch(LOGOUT())
       return false
     }
@@ -58,6 +84,8 @@ export const useAuth = () => {
   return {
     register,
     login,
-    auth
+    auth,
+    update,
+    verifyUser
   }
 }

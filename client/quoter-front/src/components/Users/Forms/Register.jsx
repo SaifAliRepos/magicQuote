@@ -1,32 +1,35 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-magic-numbers */
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/esm/Col'
 import Row from 'react-bootstrap/esm/Row'
 import Form from 'react-bootstrap/Form'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-// eslint-disable-next-line no-unused-vars
-import { SET_AlERT } from '../../reducers/alertSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { SET_AlERT } from '../../../reducers/alertSlice'
 import { useMediaQuery } from 'react-responsive'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
 import MyModal from '../VerifyUser'
 
 const RegisterForm = () => {
   const isSmallScreen = useMediaQuery({ maxWidth: 600 })
 
   const navigate = useNavigate()
-  // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch()
-  // eslint-disable-next-line no-unused-vars
-  const { register } = useAuth()
+  const { register, update, auth } = useAuth()
 
   const [modalShow, setModalShow] = React.useState(false)
+  const [profile, setProfile] = useState('')
+  const activeUser = useSelector(state => state.auth?.user?.[0])
+  const location = useLocation()
+  const myProfilePath = location.pathname === '/my-profile'
 
   const [registerFormData, setFormData] = useState({
-    user_name: '',
-    first_name: '',
-    last_name: '',
-    email: '',
+    user_name: activeUser?.user_name || '',
+    first_name: activeUser?.first_name || '',
+    last_name: activeUser?.last_name || '',
+    email: activeUser?.email || '',
     password: '',
     confirmPassword: ''
   })
@@ -39,19 +42,58 @@ const RegisterForm = () => {
       [e.target.name]: e.target.value
     })
 
-  const handleModalClose = () => {
-    setModalShow(false)
+  const handleClose = () => setModalShow(false)
+
+  const handleFileChange = async event => {
+    const file = event.target.files[0]
+    const reader = new FileReader()
+    reader.onload = () => {
+      const dataUrl = reader.result
+      if (dataUrl) {
+        const maxImgSize = 3 * 1024 * 1024
+        if (dataUrl.length <= maxImgSize) {
+          setProfile(dataUrl.toString())
+        } else {
+          console.error('The selected file is too large.')
+        }
+      }
+    }
+    reader.readAsDataURL(file)
   }
-  const onSubmit = async e => {
-    e.preventDefault()
+  const updateProfile = async () => {
+    const success = await update({ first_name, last_name, user_name, profile, password })
+    if (success) {
+      dispatch(SET_AlERT({ msg: 'User updated successfully' }))
+      auth()
+    }
+  }
+
+  const registerUser = async () => {
     if (password !== confirmPassword) {
       dispatch(SET_AlERT({ msg: 'Password mismatch' }))
     } else {
-      const success = await register({ first_name, last_name, user_name, email, password })
+      const success = await register({
+        first_name,
+        last_name,
+        user_name,
+        profile,
+        email,
+        password
+      })
       if (success) {
-        dispatch(SET_AlERT({ msg: 'User registered succesfully' }))
+        dispatch(SET_AlERT({ msg: 'User registered successfully' }))
         setModalShow(true)
       }
+    }
+  }
+
+  const onSubmit = async e => {
+    e.preventDefault()
+    const submitterText = e.nativeEvent.submitter.textContent
+    if (submitterText === 'Update') {
+      await updateProfile()
+    } else if (submitterText === 'Register') {
+      await registerUser()
     }
   }
 
@@ -59,7 +101,10 @@ const RegisterForm = () => {
     <div>
       <Row>
         <Col className=''></Col>
-        <Col md={5} className='p-5 text-center bg-light' style={{ height: '100vh' }}>
+        <Col
+          md={myProfilePath ? 8 : 6}
+          className={`p-5 text-center ${activeUser ? '' : 'bg-light'}`}
+        >
           <Form className='' onSubmit={e => onSubmit(e)}>
             <Form.Group className='mb-4' controlId='formFirstName'>
               <Form.Control
@@ -103,6 +148,7 @@ const RegisterForm = () => {
                 value={email}
                 onChange={e => onChange(e)}
                 required
+                disabled={myProfilePath ? true : false}
               />
             </Form.Group>
             <Form.Group className='mb-3' controlId='formPassword'>
@@ -127,6 +173,15 @@ const RegisterForm = () => {
                 required
               />
             </Form.Group>
+            <Form.Group className='mb-4' controlId='formImg'>
+              <Form.Control
+                size='sm'
+                type='file'
+                name='image'
+                accept='images/*'
+                onChange={handleFileChange}
+              />
+            </Form.Group>
 
             <Button
               type='submit'
@@ -134,22 +189,20 @@ const RegisterForm = () => {
               variant={isSmallScreen ? 'outline-success px-5' : 'outline-success x-large-btn'}
               value='Register'
             >
-              Register
+              {myProfilePath ? 'Update' : 'Register'}
             </Button>
             <hr />
-            <p>
-              Already have an account?
-              <Button variant='link' onClick={() => navigate('/login')}>
-                Sign in
-              </Button>
-            </p>
+            {!myProfilePath && (
+              <p>
+                Already have an account?
+                <Button variant='link' onClick={() => navigate('/login')}>
+                  Sign in
+                </Button>
+              </p>
+            )}
           </Form>
         </Col>
-        <MyModal
-          handleModalClose={handleModalClose}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
+        <MyModal show={modalShow} onHide={handleClose} />
       </Row>
     </div>
   )

@@ -3,14 +3,17 @@ import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_AlERT } from '../reducers/alertSlice'
+import { SET_AlERT } from '../../reducers/alertSlice'
+import { useAuth } from '../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 function MyModal(props) {
   const [verificationCode, setVerificationCode] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const code = useSelector(state => state.auth.verificationCode)
-
+  const { verifyUser } = useAuth()
   const onChange = e => {
     setVerificationCode(e.target.value)
   }
@@ -18,25 +21,30 @@ function MyModal(props) {
   const onSubmit = async e => {
     e.preventDefault()
     if (code == verificationCode) {
-      dispatch(SET_AlERT({ msg: 'User verified' }))
-      props.handleModalClose()
+      const res = await verifyUser()
+      if (res) {
+        dispatch(SET_AlERT({ msg: 'User verified' }))
+        navigate('/')
+      }
     } else {
       dispatch(SET_AlERT({ msg: 'Invalid code, try again' }))
     }
   }
   return (
-    <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
+    <Modal {...props} aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>Modal heading</Modal.Title>
+        <Modal.Title className='me-auto' id='contained-modal-title-vcenter'>
+          Verify Your Account
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className='text-center'>
         <Form onSubmit={e => onSubmit(e)}>
-          <Form.Group className='mb-3' controlId='formBasicPassword'>
+          <Form.Group className='mb-3 px-5' controlId='formBasicPassword'>
             <Form.Control
               size='lg'
               type='text'
               placeholder='Verification code'
-              name='verif-code'
+              name='verificationCode' // Set the name to 'verificationCode'
               value={verificationCode}
               onChange={e => onChange(e)}
               required
@@ -45,7 +53,6 @@ function MyModal(props) {
           <Button type='submit' size='md' variant='success' value='Login'>
             Verify
           </Button>
-          <hr />
         </Form>
       </Modal.Body>
     </Modal>
