@@ -11,6 +11,8 @@ import { SET_AlERT } from '../../../reducers/alertSlice'
 import { useMediaQuery } from 'react-responsive'
 import { useAuth } from '../../../hooks/useAuth'
 import MyModal from '../VerifyUser'
+import LoginImage from '../../../utils/images/login'
+import MyProfile from '../MyProfile'
 
 const RegisterForm = () => {
   const isSmallScreen = useMediaQuery({ maxWidth: 600 })
@@ -53,8 +55,6 @@ const RegisterForm = () => {
         const maxImgSize = 3 * 1024 * 1024
         if (dataUrl.length <= maxImgSize) {
           setProfile(dataUrl.toString())
-        } else {
-          console.error('The selected file is too large.')
         }
       }
     }
@@ -100,11 +100,9 @@ const RegisterForm = () => {
   return (
     <div>
       <Row>
-        <Col className=''></Col>
-        <Col
-          md={myProfilePath ? 8 : 6}
-          className={`p-5 text-center ${activeUser ? '' : 'bg-light'}`}
-        >
+        <Col className='p-5'>{!myProfilePath ? <LoginImage /> : <MyProfile />}</Col>
+        <Col md={6} className={`p-5 text-center ${activeUser ? '' : 'bg-light'}`}>
+          <p className='text-main'>{!myProfilePath && 'Register Yourself'}</p>
           <Form className='' onSubmit={e => onSubmit(e)}>
             <Form.Group className='mb-4' controlId='formFirstName'>
               <Form.Control

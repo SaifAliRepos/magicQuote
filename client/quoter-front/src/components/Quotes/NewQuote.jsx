@@ -66,7 +66,7 @@ function NewQuote(props) {
           <hr />
           <p>
             {' '}
-            <Badge bg='secondary'>Converting dreams into reality.</Badge>
+            <Badge bg='secondary'>Putting imaginations in reality</Badge>
           </p>
         </Form>
       </Container>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Form, Button, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
+import LoginImage from '../../../utils/images/login'
 
 const BasicLoginForm = () => {
   let navigate = useNavigate()
@@ -20,13 +21,10 @@ const BasicLoginForm = () => {
       [e.target.name]: e.target.value
     })
 
-  const handleverification = () => {}
-
   const onSubmit = async e => {
     e.preventDefault()
     const loggedIn = await login(email, password)
     if (loggedIn) {
-      console.log('from login call')
       auth()
       navigate('/')
     }
@@ -34,12 +32,17 @@ const BasicLoginForm = () => {
 
   return (
     <Row className='justify-content-center'>
-      <Col md={6} className=''></Col>
+      <Col md={6} className='p-5'>
+        <LoginImage />
+        <p className='offset-5 pt-3'>
+          <span className='text-second'>Register Now </span>and start posting...
+        </p>
+      </Col>
       <Col md={6} style={{ height: '100vh' }}>
         <div className='login-wrapper'>
           <div className='login-container'>
             <div className='login'>
-              <h1>Login Form</h1>
+              <h1>Login</h1>
               <Form onSubmit={e => onSubmit(e)}>
                 <div className='input-box'>
                   <Form.Group className='mb-4' controlId='formBasicEmail'>
@@ -74,7 +77,7 @@ const BasicLoginForm = () => {
                 <Button type='submit'>LOGIN</Button>
 
                 <div className='links'>
-                  <a onClick={handleverification}>Verify Account</a>
+                  <a>Verify Account</a>
                   <a onClick={() => navigate('/register')}>You dont have an account</a>
                 </div>
               </Form>
