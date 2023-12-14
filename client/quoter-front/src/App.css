@@ -226,3 +226,9 @@ a {
   font-size: 0.8rem;
   cursor: pointer;
 }
+
+.quoted {
+  font-family: 'Caveat', cursive;
+  font-family: 'Moon Dance', cursive;
+  font-weight: bold;
+}

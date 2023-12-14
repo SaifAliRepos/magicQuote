@@ -20,7 +20,7 @@ const NavScrollExample = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const navbarStyle = location.pathname === '/' ? 'px-5 bg-white' : 'px-5 mt-2 shadow bg-white'
+  const navbarStyle = location.pathname === '/' ? 'px-5 bg-white' : 'px-5 mt-2 bg-white'
   const login = location.pathname === '/login' || location.pathname === '/register'
 
   return (

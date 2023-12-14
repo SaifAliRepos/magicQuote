@@ -1,9 +1,10 @@
 import React from 'react'
+import Quotes from '../Quotes/Quotes'
 
 const Home = () => {
   return (
     <div className='p-5'>
-      <p>hellooo g</p>
+      <Quotes />
     </div>
   )
 }
