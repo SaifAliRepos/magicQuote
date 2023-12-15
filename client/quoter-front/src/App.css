@@ -1,9 +1,30 @@
+.bg-main {
+  background-color: #339E66FF !important;
+  color: white !important;
+}
+
+.bg-second {
+  background-color: #17909df1 !important;
+  color: white !important;
+}
+
 .text-main {
-  color: #339E66FF;
+  color: #339E66FF !important;
 }
 
 .text-second {
   color: #17909df1 !important;
+}
+
+.btn-wishlist {
+  background-color: #339E66FF !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-wishlist:hover {
+  color: white !important;
+  background-color: gray !important;
 }
 
 

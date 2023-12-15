@@ -1,9 +1,7 @@
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import QuoteShow from './QuoteShow'
-// import NewQuote from './NewQuote'
 import { useQuote } from '../../hooks/useQuote'
 import {
   Button,
@@ -18,17 +16,13 @@ import NewQuote from './NewQuote'
 const Quotes = () => {
   const [quotes, setQuotes] = useState([])
   const [originalQuotes, setOriginalQuotes] = useState([])
-  const [showNewPost, setShowNewPost] = useState(false)
+  const [showNewQuote, setShowNewQuote] = useState(false)
   const { getQuote } = useQuote()
 
   const fetchData = async () => {
-    try {
-      const data = await getQuote()
-      setQuotes(data?.quotes)
-      setOriginalQuotes(data?.quotes)
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    }
+    const data = await getQuote()
+    setQuotes(data?.quotes)
+    setOriginalQuotes(data?.quotes)
   }
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -58,11 +52,11 @@ const Quotes = () => {
     setQuotes(sortedQuotes)
   }
 
-  const handleShowNewPost = () => {
-    setShowNewPost(true)
+  const handleShowNewQuote = () => {
+    setShowNewQuote(true)
   }
-  const handleHideNewPost = () => {
-    setShowNewPost(false)
+  const handleHideNewQuote = () => {
+    setShowNewQuote(false)
   }
 
   useEffect(() => {
@@ -74,17 +68,17 @@ const Quotes = () => {
       <Row>
         <Col className='rounded p-0'>
           <Container className='p-5'>
-            {showNewPost && (
+            {showNewQuote && (
               <NewQuote
                 actionBtn='Post'
                 fetchData={() => {
                   fetchData()
-                  handleHideNewPost()
+                  handleHideNewQuote()
                 }}
               />
             )}
             <InputGroup className='mb-3'>
-              <Button className='btn-light' onClick={handleShowNewPost}>
+              <Button className='btn-light' onClick={handleShowNewQuote}>
                 New Post
               </Button>
               <FormControl
@@ -99,7 +93,9 @@ const Quotes = () => {
               </DropdownButton>
             </InputGroup>
           </Container>
-          <QuoteShow fetchData={fetchData} quotes={quotes} />
+          <Suspense fallback={<div>Loading quotes...</div>}>
+            <QuoteShow fetchData={fetchData} quotes={quotes} />
+          </Suspense>
         </Col>
       </Row>
     </div>

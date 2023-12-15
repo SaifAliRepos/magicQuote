@@ -12,6 +12,7 @@ const initialUsers = [
     gender: 'Male',
     email: 'jack@example.com',
     password: 'password789',
+    wishlist: ['lifestyle', 'inpiration'],
     connections: [7, 6, 8]
   },
   {
@@ -22,6 +23,7 @@ const initialUsers = [
     gender: 'Female',
     email: 'emily@example.com',
     password: 'password101',
+    wishlist: ['lifestyle'],
     connections: [6]
   },
   {
@@ -32,6 +34,7 @@ const initialUsers = [
     gender: 'Male',
     email: 'michael@example.com',
     password: 'password111',
+    wishlist: [],
     connections: [6]
   },
   {
@@ -42,6 +45,7 @@ const initialUsers = [
     gender: 'Female',
     email: 'sophia@example.com',
     password: 'password222',
+    wishlist: [],
     connections: []
   },
   {
@@ -52,6 +56,7 @@ const initialUsers = [
     gender: 'Male',
     email: 'liam@example.com',
     password: 'password333',
+    wishlist: [],
     connections: []
   }
 ]
@@ -88,19 +93,23 @@ const userSlice = createSlice({
       const unfollowedUser = state.users.find(user => user.id === unfollowedUserId)
 
       if (currentUser && unfollowedUser) {
-        // Remove unfollowedUserId from currentUser's connections
         currentUser.connections = currentUser.connections.filter(
           connectionId => connectionId !== unfollowedUserId
         )
-
-        // Remove userId from unfollowedUser's connections
         unfollowedUser.connections = unfollowedUser.connections.filter(
           connectionId => connectionId !== userId
         )
+      }
+    },
+    addTags: (state, action) => {
+      const { userId, tag } = action.payload
+      const user = state.users.find(user => user.id === userId)
+      if (!user.wishlist.includes(tag)) {
+        user.wishlist.push(tag)
       }
     }
   }
 })
 
-export const { getUsers, followRequest, unfollowRequest } = userSlice.actions
+export const { getUsers, followRequest, unfollowRequest, addTags } = userSlice.actions
 export default userSlice.reducer

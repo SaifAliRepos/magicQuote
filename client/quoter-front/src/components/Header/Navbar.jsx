@@ -68,8 +68,7 @@ const NavScrollExample = () => {
             </Button>
             <Button
               href='/login'
-              variant='outline-primary'
-              className={'rounded-5 mx-2'}
+              className={'rounded-5 mx-3 bg-second border-0'}
               size='md'
               onClick={() => activeUser && dispatch(LOGOUT())}
             >
