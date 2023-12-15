@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import ViewQuote from './ViewQuote'
 import Heart from 'react-heart'
 import { useQuote } from '../../hooks/useQuote'
@@ -9,9 +8,11 @@ import { Button, Container, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTags, getUsers } from '../../reducers/userSlice'
 import { SET_AlERT } from '../../reducers/alertSlice'
+import itn from '../../../src/utils/images/urls.json'
 
 const QuoteShow = props => {
   const [active, setActive] = useState(false)
+  const [tagId] = useId()
 
   const dispatch = useDispatch()
   const users = useSelector(state => state.user.users)
@@ -39,7 +40,7 @@ const QuoteShow = props => {
             <div>
               {quote.tags.map(tag => (
                 <Button
-                  key={tag.key}
+                  key={`${tag}-${tagId}`}
                   onMouseOver={e => (e.target.innerText = 'Add to Wishlist')}
                   onMouseOut={e => (e.target.innerText = '#' + tag)}
                   onClick={() => addTagsInWishlist(tag)}
@@ -68,7 +69,7 @@ const QuoteShow = props => {
           </Container>
           <Image
             className='rounded mt-5'
-            src='https://images.unsplash.com/photo-1619972898592-5de4b1c68025?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bWFjYm9vayUyMGNvZmZlZXxlbnwwfHwwfHx8MA%3D%3D'
+            src={itn.DUMMY_IMAGE_FOR_QUOTES}
             alt='Writing gif'
             style={{ width: '90%', height: '60vh', objectFit: 'cover' }}
           />

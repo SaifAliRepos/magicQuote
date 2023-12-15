@@ -3,6 +3,7 @@ import { Form, Button, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 import LoginImage from '../../../utils/images/login'
+import itn from '../../../constants/contants.json'
 
 const BasicLoginForm = () => {
   let navigate = useNavigate()
@@ -74,7 +75,7 @@ const BasicLoginForm = () => {
                   </Form.Group>
                 </div>
 
-                <Button type='submit'>LOGIN</Button>
+                <Button type='submit'>{itn.LOGIN}</Button>
 
                 <div className='links'>
                   <a>Verify Account</a>

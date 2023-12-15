@@ -1,8 +1,22 @@
 {
-  "POST_UPDATED": "Quote updated successfully!",
-  "POST_DELETED": "Quote removed successfully!",
-  "POST_CREATED": "Quote created successfully!",
-  "POST_NOT_LOADED": "Unable to load quotes..",
+  "TAGLINE": "Putting your thoughts into reality",
+  "BRAND": "Quote i t",
+  "LOGIN": "Login",
+  "LOGOUT": "Logout",
+  "REGISTER": "Register",
+  "SIGN_IN": "Sign In",
+  "VERIFY": "Verify",
+  "VIEW_QUOTE": "View Quote",
+  "EDIT_QUOTE": "Edit Quote",
+  "QUOTE_UPDATED": "Quote updated successfully!",
+  "QUOTE_UPDATED_DELETED": "Quote removed successfully!",
+  "QUOTE_CREATED": "Quote created successfully!",
+  "QUOTE_NOT_LOADED": "Unable to load quotes..",
   "USER_CREATED": "User registered successfully!",
-  "SIGNIN": "Signed in succesfully!"
+  "SIGNIN": "Signed in succesfully!",
+  "NO_USERS": "Unable to fetch users",
+  "CONNECTIONS": "Connections",
+  "TOTAL_CONNECTIONS": "Total Connections",
+  "FOLLOWERS": "Followers",
+  "TAGS_YOU_FOLLOW": "Connections"
 }

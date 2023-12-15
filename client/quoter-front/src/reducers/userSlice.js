@@ -13,6 +13,7 @@ const initialUsers = [
     email: 'jack@example.com',
     password: 'password789',
     wishlist: ['lifestyle', 'inpiration'],
+    role: 'admin',
     connections: [7, 6, 8]
   },
   {
@@ -24,6 +25,7 @@ const initialUsers = [
     email: 'emily@example.com',
     password: 'password101',
     wishlist: ['lifestyle'],
+    role: 'user',
     connections: [6]
   },
   {
@@ -35,6 +37,7 @@ const initialUsers = [
     email: 'michael@example.com',
     password: 'password111',
     wishlist: [],
+    role: 'user',
     connections: [6]
   },
   {
@@ -46,6 +49,7 @@ const initialUsers = [
     email: 'sophia@example.com',
     password: 'password222',
     wishlist: [],
+    role: 'user',
     connections: []
   },
   {
@@ -57,6 +61,67 @@ const initialUsers = [
     email: 'liam@example.com',
     password: 'password333',
     wishlist: [],
+    role: 'user',
+    connections: []
+  },
+  {
+    id: 11,
+    firstName: 'Emma',
+    lastName: 'Wilson',
+    userName: 'emmawilson',
+    gender: 'Female',
+    email: 'emma@example.com',
+    password: 'password444',
+    wishlist: ['books', 'travel'],
+    role: 'user',
+    connections: [12]
+  },
+  {
+    id: 12,
+    firstName: 'Noah',
+    lastName: 'Anderson',
+    userName: 'noahanderson',
+    gender: 'Male',
+    email: 'noah@example.com',
+    password: 'password555',
+    wishlist: ['technology'],
+    role: 'user',
+    connections: [11]
+  },
+  {
+    id: 13,
+    firstName: 'Olivia',
+    lastName: 'Thomas',
+    userName: 'oliviathomas',
+    gender: 'Female',
+    email: 'olivia@example.com',
+    password: 'password666',
+    wishlist: ['fitness'],
+    role: 'user',
+    connections: [14]
+  },
+  {
+    id: 14,
+    firstName: 'Elijah',
+    lastName: 'Garcia',
+    userName: 'elijahgarcia',
+    gender: 'Male',
+    email: 'elijah@example.com',
+    password: 'password777',
+    wishlist: ['music'],
+    role: 'user',
+    connections: [13]
+  },
+  {
+    id: 15,
+    firstName: 'Ava',
+    lastName: 'Martinez',
+    userName: 'avamartinez',
+    gender: 'Female',
+    email: 'ava@example.com',
+    password: 'password888',
+    wishlist: ['food'],
+    role: 'user',
     connections: []
   }
 ]

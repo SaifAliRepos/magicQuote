@@ -1,10 +1,11 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/esm/Container'
 import Form from 'react-bootstrap/Form'
 import Badge from 'react-bootstrap/Badge'
 import { useQuote } from '../../hooks/useQuote'
+import itn from '../../constants/contants.json'
 
 function NewQuote(props) {
   const { createQuote, updateQuote } = useQuote()
@@ -66,12 +67,19 @@ function NewQuote(props) {
           <hr />
           <p>
             {' '}
-            <Badge bg='secondary'>Putting imaginations in reality</Badge>
+            <Badge bg='secondary'>{itn.TAGLINE}</Badge>
           </p>
         </Form>
       </Container>
     </div>
   )
+}
+
+NewQuote.propTypes = {
+  actionBtn: PropTypes.string.isRequired,
+  data: PropTypes.object,
+  fetchData: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 }
 
 export default NewQuote

@@ -43,7 +43,7 @@ export const useAuth = () => {
       dispatch(SET_AlERT({ msg: 'User Verified' }))
       return res.data
     } catch (err) {
-      console.log(err)
+      dispatch(SET_AlERT({ msg: err }))
     }
   }
 
@@ -52,7 +52,6 @@ export const useAuth = () => {
       const body = { email, password }
       const res = await api.post('/users/login', body)
       dispatch(REGISTER_USER({ token: res.data.token }))
-      console.log(res.data)
       dispatch(SET_AlERT({ msg: itn.SIGNIN }))
       return true
     } catch (err) {
@@ -61,8 +60,6 @@ export const useAuth = () => {
       if (errors) {
         errors.forEach(error => dispatch(SET_AlERT({ msg: error.msg })))
       }
-
-      console.log('From login')
       dispatch(LOGOUT())
       return false
     }
@@ -75,7 +72,6 @@ export const useAuth = () => {
       dispatch(USER_LOADED(res.data))
       return true
     } catch (err) {
-      console.log('from auth')
       dispatch(LOGOUT())
       return false
     }

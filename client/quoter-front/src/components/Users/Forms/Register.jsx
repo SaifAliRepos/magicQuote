@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-magic-numbers */
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
@@ -13,6 +12,7 @@ import { useAuth } from '../../../hooks/useAuth'
 import MyModal from '../VerifyUser'
 import LoginImage from '../../../utils/images/login'
 import MyProfile from '../MyProfile'
+import itn from '../../../constants/contants.json'
 
 const RegisterForm = () => {
   const isSmallScreen = useMediaQuery({ maxWidth: 600 })
@@ -194,7 +194,7 @@ const RegisterForm = () => {
               <p>
                 Already have an account?
                 <Button variant='link' onClick={() => navigate('/login')}>
-                  Sign in
+                  {itn.SIGN_IN}
                 </Button>
               </p>
             )}

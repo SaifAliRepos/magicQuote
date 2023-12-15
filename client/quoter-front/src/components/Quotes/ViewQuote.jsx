@@ -1,8 +1,9 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import NewQuote from './NewQuote'
+import itn from '../../constants/contants.json'
 
 export default function ViewQuote(props) {
   const [show, setShow] = useState(false)
@@ -13,13 +14,13 @@ export default function ViewQuote(props) {
   return (
     <>
       <Button variant='outline-dark' size='sm' className='px-3' onClick={handleShow}>
-        View
+        {itn.VIEW_QUOTE}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <strong>Edit Post</strong>
+            <strong>{itn.EDIT_QUOTE}</strong>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='text-center'>
@@ -33,4 +34,9 @@ export default function ViewQuote(props) {
       </Modal>
     </>
   )
+}
+
+ViewQuote.propTypes = {
+  data: PropTypes.object,
+  fetchData: PropTypes.func.isRequired
 }

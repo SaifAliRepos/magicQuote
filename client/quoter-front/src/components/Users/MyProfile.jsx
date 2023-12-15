@@ -4,6 +4,7 @@ import { Badge, Col, Container, Image, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { List } from 'react-virtualized'
 import { motion } from 'framer-motion'
+import itn from '../../constants/contants.json'
 
 const MyProfile = () => {
   const users = useSelector(state => state.user.users)
@@ -16,7 +17,7 @@ const MyProfile = () => {
     const user = filteredUsers[index]
 
     return (
-      <div key={key} style={style} className='mb-3 d-flex align-items-center'>
+      <div key={key} style={style} className='mb-3 d-flex align-items-center shadow'>
         <Image
           src={user.gender === 'Female' ? '/assets/female.png' : '/assets/male.webp'}
           width={'55px'}
@@ -27,7 +28,7 @@ const MyProfile = () => {
           {user.firstName} {user.lastName}
         </span>
         <span className='mx-3'>
-          <small>connections: </small>
+          <small>{itn.CONNECTIONS}:</small>
           <Badge bg='secondary'>{user.connections.length}</Badge>
         </span>
       </div>
@@ -36,7 +37,7 @@ const MyProfile = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className='bg-light rounded py-2'>
         <Col md={3}>
           <motion.div
             animate={{ rotateY: [0, 360] }}
@@ -55,13 +56,16 @@ const MyProfile = () => {
           <h3>
             {currentUser.firstName} {currentUser.lastName}
           </h3>
-          <p>Total connections: {currentUser.connections.length}</p>
+          <p>
+            {itn.TOTAL_CONNECTIONS}: {currentUser.connections.length}
+          </p>
+          <p>{itn.NEVER_SETTLE}</p>
         </Col>
       </Row>
       <Row className='mt-3'>
         <Col>
           <div className='d-inline'>
-            <span className='bg-light rounded'>Tags you followed: </span>
+            <span className='bg-light rounded'>{itn.TAGS_YOU_FOLLOW}: </span>
             {currentUser.wishlist.map(tag => (
               <motion.div
                 key={tag}
@@ -75,7 +79,7 @@ const MyProfile = () => {
               </motion.div>
             ))}
           </div>
-          <h4 className='font-weight-bold'>Followers</h4>
+          <h4 className='font-weight-bold'>{itn.FOLLOWERS}</h4>
           <List
             width={350}
             height={250}
