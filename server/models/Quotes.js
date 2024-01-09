@@ -31,6 +31,14 @@ const quoteSchema = new mongoose.Schema(
         text: {
           type: String,
         },
+        like: [
+          {
+            user: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: 'User',
+            },
+          },
+        ],
       },
     ],
   },
