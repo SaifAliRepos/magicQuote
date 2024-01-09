@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SET_AlERT } from '../../reducers/alertSlice'
 import { useAuth } from '../../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import itn from '../../constants/contants.json'
 
 function MyModal(props) {
   const [verificationCode, setVerificationCode] = useState('')
@@ -13,7 +14,7 @@ function MyModal(props) {
   const navigate = useNavigate()
 
   const code = useSelector(state => state.auth.verificationCode)
-  const { verifyUser } = useAuth()
+  const { verifyUser, auth } = useAuth()
   const onChange = e => {
     setVerificationCode(e.target.value)
   }
@@ -21,6 +22,7 @@ function MyModal(props) {
   const onSubmit = async e => {
     e.preventDefault()
     if (code == verificationCode) {
+      auth()
       const res = await verifyUser()
       if (res) {
         dispatch(SET_AlERT({ msg: 'User verified' }))
@@ -51,7 +53,7 @@ function MyModal(props) {
             />
           </Form.Group>
           <Button type='submit' size='md' variant='success' value='Login'>
-            Verify
+            {itn.VERIFY}
           </Button>
         </Form>
       </Modal.Body>

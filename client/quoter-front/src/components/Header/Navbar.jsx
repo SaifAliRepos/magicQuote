@@ -10,24 +10,26 @@ import Profile from '../../icons/profile'
 import { LOGOUT } from '../../reducers/authSlice'
 import MyNetwork from '../../icons/network'
 import { useMediaQuery } from 'react-responsive'
+import itn from '../../constants/contants.json'
 
 const NavScrollExample = () => {
   const isMediumScreen = useMediaQuery({ maxWidth: 1000 })
 
-  const activeUser = useSelector(state => state.auth.user[0])
+  const activeUser = useSelector(state => state.auth?.user?.[0])
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const navbarStyle = location.pathname === '/' ? 'px-5 bg-white' : 'px-5 mt-2 shadow bg-white'
   const login = location.pathname === '/login' || location.pathname === '/register'
 
   return (
     <div className={login ? 'd-none' : 'mt-2'}>
-      <Navbar expand='lg' className={navbarStyle}>
+      <Navbar expand='lg' className='px-5 bg-white'>
         <Navbar.Brand onClick={() => navigate('/')}>
-          <span className='my-4 mx-1 h4 blue'>Quote i t </span>
+          <span className='my-4 mx-1 text-main font-weight-bold'>
+            {itn.BRAND} <small className='text-secondary'> - {itn.TAGLINE}</small>
+          </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='navbarScroll' />
         <Navbar.Collapse className={isMediumScreen ? 'text-left' : 'text-center'} id='navbarScroll'>
@@ -64,16 +66,15 @@ const NavScrollExample = () => {
               className={activeUser ? 'd-none' : 'rounded-5'}
               size='md'
             >
-              Register
+              {itn.REGISTER}
             </Button>
             <Button
               href='/login'
-              variant='outline-primary'
-              className={'rounded-5 mx-2'}
+              className={'rounded-5 mx-3 bg-second border-0'}
               size='md'
               onClick={() => activeUser && dispatch(LOGOUT())}
             >
-              {activeUser ? `Logout (${activeUser.user_name})` : 'Login'}
+              {activeUser ? `${itn.LOGOUT} (${activeUser.user_name})` : itn.LOGIN}
             </Button>
           </Form>
         </Navbar.Collapse>

@@ -1,3 +1,33 @@
+.bg-main {
+  background-color: #339E66FF !important;
+  color: white !important;
+}
+
+.bg-second {
+  background-color: #17909df1 !important;
+  color: white !important;
+}
+
+.text-main {
+  color: #339E66FF !important;
+}
+
+.text-second {
+  color: #17909df1 !important;
+}
+
+.btn-wishlist {
+  background-color: #339E66FF !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-wishlist:hover {
+  color: white !important;
+  background-color: gray !important;
+}
+
+
 .bg-login {
   background-image: url('https://images.unsplash.com/photo-1584273421792-84b448728b38?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3RyJTIwcjM1fGVufDB8fDB8fHww');
   background-size: cover;
@@ -36,37 +66,36 @@
   height: 400px;
   border-radius: 50%;
   background: #17909df1;
-  /* transform: scale(0.5) translate(-100%, -100%); */
-  /* transform: translateX(4em); */
-  /* transform: scale(2, 0.5); */
-
-  animation: move-up6 2s ease-in-out infinite;
-
+  animation: moveUpDown6 2s ease-in-out infinite;
+  bottom: 100px;
+  /* Adjust this value to start the element lower */
 }
 
 .login-container::after {
   content: "";
   position: absolute;
-  vertical-align: bottom;
   width: 250px;
   height: 250px;
   border-radius: 50%;
   background: #4ab7c3c3;
-
-  animation: move-up6 2s ease-in infinite alternate-reverse;
+  animation: moveUpDown6 2s ease-in infinite;
+  bottom: 170px;
+  /* Adjust this value to start the element lower */
 }
 
-@keyframes move-up6 {
+@keyframes moveUpDown6 {
 
   0%,
-  50% {
+  100% {
     transform: translateY(0);
   }
 
   50% {
-    transform: translateY(-50px);
+    transform: translateY(-100px);
   }
 }
+
+
 
 a {
   text-decoration: none;
@@ -225,4 +254,10 @@ a {
   font-weight: bold;
   font-size: 0.8rem;
   cursor: pointer;
+}
+
+.quoted {
+  font-family: 'Caveat', cursive;
+  font-family: 'Moon Dance', cursive;
+  font-weight: bold;
 }

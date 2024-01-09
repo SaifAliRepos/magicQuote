@@ -9,7 +9,7 @@ function AutohideToast() {
   const dispatch = useDispatch()
 
   return (
-    <ToastContainer position='top-end' className='m-2'>
+    <ToastContainer position='top-end' className='m-2 position-fixed'>
       <ToastFade>
         <ToastFade
           onClose={() => {

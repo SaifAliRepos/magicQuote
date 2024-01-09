@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = require('./routes/user');
+const quoteRouter = require('./routes/quotes');
 const connectDB = require('./config/connectDB');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(
 
 app.use(express.json());
 app.use('/users', userRouter);
+app.use('/quotes', quoteRouter);
 
 const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => console.log(`Now listening to ${PORT}`));
